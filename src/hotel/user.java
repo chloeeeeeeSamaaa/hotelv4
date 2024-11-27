@@ -44,6 +44,7 @@ public class user extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
         left = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         usname = new javax.swing.JTextField();
@@ -67,19 +68,14 @@ public class user extends javax.swing.JFrame {
         jPanel2.setPreferredSize(new java.awt.Dimension(800, 500));
         jPanel2.setLayout(null);
 
-        left.setBackground(new java.awt.Color(51, 255, 255));
+        left.setBackground(new java.awt.Color(204, 0, 255));
         left.setPreferredSize(new java.awt.Dimension(400, 500));
+        left.setLayout(null);
 
-        javax.swing.GroupLayout leftLayout = new javax.swing.GroupLayout(left);
-        left.setLayout(leftLayout);
-        leftLayout.setHorizontalGroup(
-            leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        leftLayout.setVerticalGroup(
-            leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
-        );
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/x6crnd9k5q8c1.gif"))); // NOI18N
+        jLabel8.setText("jLabel8");
+        left.add(jLabel8);
+        jLabel8.setBounds(-50, -10, 430, 500);
 
         jPanel2.add(left);
         left.setBounds(0, 0, 400, 500);
@@ -88,7 +84,7 @@ public class user extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(400, 500));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(51, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(204, 0, 255));
         jLabel1.setText("SIGN UP");
 
         usname.setMinimumSize(new java.awt.Dimension(70, 30));
@@ -140,7 +136,7 @@ public class user extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(51, 255, 255));
+        jButton1.setBackground(new java.awt.Color(204, 0, 255));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("OK");
@@ -150,10 +146,11 @@ public class user extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(51, 255, 255));
+        jButton2.setBackground(new java.awt.Color(204, 0, 255));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("CLOSE");
+        jButton2.setToolTipText("");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -165,7 +162,11 @@ public class user extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(29, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(101, 101, 101))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(30, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -188,10 +189,6 @@ public class user extends javax.swing.JFrame {
                             .addComponent(fbutton, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap(72, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(101, 101, 101))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -294,7 +291,7 @@ public class user extends javax.swing.JFrame {
 
     pat.executeUpdate();
     
-    JOptionPane.showMessageDialog(this, "USER CREATED");
+    JOptionPane.showMessageDialog(this, "Thank you for signing up! Your account has been successfully created.");
 
     // Clear fields
     usname.setText("");
@@ -311,7 +308,7 @@ public class user extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-       Main obj = new Main();
+       Login obj = new Login();
        obj.setVisible(true);
        dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -369,6 +366,7 @@ public class user extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel left;

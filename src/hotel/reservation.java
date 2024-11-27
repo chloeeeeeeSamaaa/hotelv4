@@ -159,7 +159,6 @@ public class reservation extends javax.swing.JFrame {
         txtmobile = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
-        gaga = new javax.swing.JButton();
         right = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -213,6 +212,11 @@ public class reservation extends javax.swing.JFrame {
         jLabel10.setText("Bed Type");
 
         txtrtype.setMinimumSize(new java.awt.Dimension(72, 30));
+        txtrtype.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtrtypeActionPerformed(evt);
+            }
+        });
 
         txtro.setPreferredSize(new java.awt.Dimension(72, 30));
 
@@ -233,14 +237,12 @@ public class reservation extends javax.swing.JFrame {
             }
         });
 
-        gaga.setText("haha");
-
         javax.swing.GroupLayout leftLayout = new javax.swing.GroupLayout(left);
         left.setLayout(leftLayout);
         leftLayout.setHorizontalGroup(
             leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(leftLayout.createSequentialGroup()
-                .addGroup(leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(leftLayout.createSequentialGroup()
                         .addGap(70, 70, 70)
                         .addGroup(leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -256,27 +258,20 @@ public class reservation extends javax.swing.JFrame {
                     .addGroup(leftLayout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addGroup(leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton5)
+                            .addGroup(leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel5)
+                                .addComponent(jLabel4)
+                                .addComponent(jLabel3))
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
                             .addGroup(leftLayout.createSequentialGroup()
-                                .addComponent(jButton5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(gaga)
-                                .addGap(11, 11, 11))
-                            .addGroup(leftLayout.createSequentialGroup()
-                                .addGroup(leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel5)
-                                        .addComponent(jLabel4)
-                                        .addComponent(jLabel3))
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel8)
-                                    .addGroup(leftLayout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel12))
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel10))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel12))
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10))))
                 .addContainerGap(78, Short.MAX_VALUE))
         );
         leftLayout.setVerticalGroup(
@@ -321,19 +316,18 @@ public class reservation extends javax.swing.JFrame {
                     .addComponent(jLabel10)
                     .addComponent(txtbtype, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(86, 86, 86)
-                .addGroup(leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(gaga))
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(36, Short.MAX_VALUE))
         );
 
         jPanel1.add(left);
         left.setBounds(0, 0, 350, 590);
 
-        right.setBackground(new java.awt.Color(102, 255, 255));
+        right.setBackground(new java.awt.Color(204, 0, 255));
         right.setMinimumSize(new java.awt.Dimension(690, 590));
         right.setPreferredSize(new java.awt.Dimension(780, 590));
 
+        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null, null},
@@ -566,7 +560,7 @@ pat.setString(12, "Pending");  // Set the status to 'Pending'
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String reserveID = jLabel12.getText();
+       String reserveID = jLabel12.getText();
     String name = txtname.getText().trim();
     String address = txtaddress.getText().trim();
     String mobile = txtmobile.getText().trim();
@@ -585,12 +579,25 @@ pat.setString(12, "Pending");  // Set the status to 'Pending'
     Date endDate = txtcheckout.getDate();
     String StartDate = df1.format(startDate);
     String EndDate = df1.format(endDate);
-    
+
     String roomType = txtrtype.getSelectedItem().toString();
     String bedType = txtbtype.getSelectedItem().toString();
     String roomNo = txtro.getSelectedItem().toString();
 
     try {
+        // Check if the reservation status is "approved"
+        pat = con.prepareStatement("SELECT status FROM reservation WHERE reserveID = ?");
+        pat.setString(1, reserveID);
+        ResultSet rsStatus = pat.executeQuery();
+        
+        if (rsStatus.next()) {
+            String status = rsStatus.getString("status");
+            if ("approved".equalsIgnoreCase(status)) {
+                JOptionPane.showMessageDialog(this, "This reservation is approved and cannot be updated.");
+                return;  // Prevent further action if the reservation is approved
+            }
+        }
+
         // Validate that CheckOut date is after CheckIn date
         if (startDate.after(endDate)) {
             JOptionPane.showMessageDialog(this, "Check-Out date cannot be before Check-In date.");
@@ -867,6 +874,10 @@ private double getRoomRate(String roomNo) {
         obj.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void txtrtypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtrtypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtrtypeActionPerformed
  public void Load_reservation() {
     try {
         // Use a parameterized query to prevent SQL injection
@@ -945,7 +956,6 @@ private double getRoomRate(String roomNo) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton gaga;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
